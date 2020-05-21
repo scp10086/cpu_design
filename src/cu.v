@@ -97,20 +97,22 @@ always@(posedge clk or negedge rst)begin
     if(buffer_control_signal[car_jump] == 1)
         begin
         case (data_from_ir)
-        store:car_addr<=8'b00001000;
-        load:car_addr<=8'b00010000;
-        add:car_addr<=8'b00011000;
-        sub:car_addr<=8'b00100000;
-        jmpgez:car_addr<=8'b0101_0000;
-        jmp:car_addr<=8'b0110_0000;
-        halt:car_addr<=8'b0111_0000;
-        mpy:car_addr<=8'b1000_0000;
-        div:car_addr<=8'b1001_0000;
-        and_and:car_addr<=8'b1010_0000;
-        or_or:car_addr<=8'b1011_0000;
-        not_not:car_addr<=8'b1100_0000;
-        logical_shift_right:car_addr<=8'b1101_0000;
-        logical_shift_left:car_addr<=8'b1110_0000;
+        store:car_addr<=8'b0000_1000;
+        load:car_addr<=8'b0001_0000;
+        add:car_addr<=8'b0001_1000;
+        sub:car_addr<=8'b0010_0000;
+        jmpgez:car_addr<=8'b0010_1000;
+        jmp:car_addr<=8'b0011_0000;
+        halt:car_addr<=8'b0011_1000;
+        mpy:car_addr<=8'b0100_0000;
+        div:car_addr<=8'b0100_1000;
+        and_and:car_addr<=8'b0101_0000;
+        or_or:car_addr<=8'b0101_1000;
+        not_not:car_addr<=8'b0110_0000;
+        logical_shift_right:car_addr<=8'b0110_1000;
+        logical_shift_left:car_addr<=8'b0111_0000;
+        arithmetic_shift_right:car_addr<=8'b0111_1000;
+        arithmetic_shift_left:car_addr<=8'b1000_0000;
         default:car_addr<=0;
         endcase
         end
@@ -124,18 +126,25 @@ always@(posedge clk)begin
     8'b0000_0010:buffer_control_signal<=ir2cu|car_plus1;
     8'b0000_0011:buffer_control_signal<=car_jump;
     //STORE
-    8'b0001_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
-    8'b0001_0001:buffer_control_signal<=acc2mbr|car_plus1;
-    8'b0001_0010:buffer_control_signal<=mbr2memory|car_plus1;
-    8'b0001_0011:buffer_control_signal<=pc2mar|car_clear;
+    8'b0000_1000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
+    8'b0000_1001:buffer_control_signal<=acc2mbr|car_plus1;
+    8'b0000_1010:buffer_control_signal<=mbr2memory|car_plus1;
+    8'b0000_1011:buffer_control_signal<=pc2mar|car_clear;
     //LOAD
+    8'b0001_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
+    8'b0001_0001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0001_0010:buffer_control_signal<=mbr2br|acc_clear|car_plus1;
+    8'b0001_0011:buffer_control_signal<=addition|car_plus1;
+    8'b0001_0100:buffer_control_signal<=pc2mar|car_clear;
+    //ADD
+    8'b0001_1000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
+    8'b0001_1001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0001_1010:buffer_control_signal<=mbr2br|car_plus1;
+    8'b0001_1011:buffer_control_signal<=addition|car_plus1;
+    8'b0001_1100:buffer_control_signal<=pc2mar|car_clear;
+    //SUB
     8'b0010_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
     8'b0010_0001:buffer_control_signal<=memory2mbr|car_plus1;
-    8'b0010_0010:
-    //ADD
-    
-    //SUB
-    
     //JMPGEZ
     
     //JMP

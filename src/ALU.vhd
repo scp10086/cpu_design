@@ -18,6 +18,7 @@ entity ALU is
   clk,rst:in std_logic;
   BRtoALU:in std_logic_vector(15 downto 0);
   ctrl_sig:in std_logic_vector(31 downto 0); --32位控制信号
+  flag:out std_logic_vector(7 downto 0); --8位flag
   ACCtoALU:in std_logic_vector(15 downto 0);
   ALUtoACC, ALUtoMR:out std_logic_vector(15 downto 0) --MR放乘法结果的高16位
    );
@@ -41,6 +42,20 @@ if (clk'event and clk='1') then
 end if;
 
 end process;
+
+process(clk)
+begin
+if (clk'event and clk='1') then
+if (rst='1') then
+if (ACCtoALU(15)=0) then --ACC>=0
+flag<="00000000";
+else 
+flag<="00000001";
+end if;
+end if;
+end if;
+end process;
+
 
 process(clk)
 variable temp:std_logic_vector(31 downto 0):=x"00000000"; --乘积

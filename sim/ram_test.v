@@ -28,12 +28,19 @@ reg [7:0]addr;
 reg [15:0]data_in;
 wire [15:0]data_out;
 reg flag_pos;
+reg [31:0]flag;
+parameter enable = 32'b1<<0;
+parameter enable1 = 32'b1<<1;
+parameter enable2 = 32'b1<<2;
 initial begin
+flag = enable|enable2;
 clk = 1'b0;
 rst = 1'b1;
 addr = 8'b0000_0000;
 data_in = 16'h0000;
 flag_pos = 1'b0;
+
+
 end
 always #10 clk = ~clk;
 always @(posedge clk or posedge rst)begin

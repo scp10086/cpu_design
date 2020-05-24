@@ -149,25 +149,60 @@ always@(posedge clk)begin
     8'b0010_0011:buffer_control_signal<=subtraction|car_plus1;
     8'b0010_0100:buffer_control_signal<=pc2mar|car_clear;
     //JMPGEZ
-    
+    8'b0010_1000:begin
+                    if(flags[0] == 0)begin
+                        buffer_control_signal<= mbr2pc|car_plus1;
+                    end
+                    else begin
+                        buffer_control_signal<=pc_plus1|car_plus1;
+                    end
+        
+        end
+     8'b0010_1001:buffer_control_signal<=pc2mar|car_clear;   
     //JMP
-    
+    8'b0011_0000:buffer_control_signal<= mbr2pc|car_plus1;
+    8'b0011_0001:buffer_control_signal<=pc2mar|car_clear;
     //HALT
-    
+    8'b0011_1000:buffer_control_signal<=car_clear;
     //MPY
-    
+    8'b0100_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
+    8'b0100_0001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0100_0010:buffer_control_signal<=mbr2br|car_plus1;
+    8'b0100_0011:buffer_control_signal<=mpy_operation|car_plus1;
+    8'b0100_0100:buffer_control_signal<=alu2mbr|car_plus1;
+    8'b0100_0101:buffer_control_signal<=pc2mar|car_clear;
     //DIV
     
     //AND
-    
+    8'b0101_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
+    8'b0101_0001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0101_0010:buffer_control_signal<=mbr2br|car_plus1;
+    8'b0101_0011:buffer_control_signal<=and_operation|car_plus1;
+    8'b0101_0100:buffer_control_signal<=pc2mar|car_clear;
     //OR
-    
+    8'b0101_1000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
+    8'b0101_1001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0101_1010:buffer_control_signal<=mbr2br|car_plus1;
+    8'b0101_1011:buffer_control_signal<=or_operation|car_plus1;
+    8'b0101_1100:buffer_control_signal<=pc2mar|car_clear;
     //NOT
-    
-    //RIGHTSHIFT
-    
-    //LEFTSHIFT
-    
+    8'b0110_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
+    8'b0110_0001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0110_0010:buffer_control_signal<=mbr2br|car_plus1;
+    8'b0110_0011:buffer_control_signal<=not_operation|car_plus1;
+    8'b0110_0100:buffer_control_signal<=pc2mar|car_clear;
+    //logical_shift_right
+    8'b0110_1000:buffer_control_signal<=logical_shift_right_operation|pc_plus1|car_plus1;
+    8'b0110_1001:buffer_control_signal<=pc2mar|car_clear;
+    //logical_shift_left
+    8'b0111_0000:buffer_control_signal<=logical_shift_left_operation|pc_plus1|car_plus1;
+    8'b0111_0001:buffer_control_signal<=pc2mar|car_clear;
+    //arithmetic_shift_right
+    8'b0111_1000:buffer_control_signal<=arithmetic_shift_right|pc_plus1|car_plus1;
+    8'b0111_0001:buffer_control_signal<=pc2mar|car_clear;
+    //arithmetic_shift_left:car_addr<=8'b1000_0000;
+    8'b1000_0000:buffer_control_signal<=arithmetic_shift_left|pc_plus1|car_plus1;
+    8'b1000_0001:buffer_control_signal<=pc2mar|car_clear;
     default:buffer_control_signal<=0;
     endcase
 end

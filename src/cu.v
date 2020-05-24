@@ -145,6 +145,9 @@ always@(posedge clk)begin
     //SUB
     8'b0010_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
     8'b0010_0001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0010_0010:buffer_control_signal<=mbr2br|car_plus1;
+    8'b0010_0011:buffer_control_signal<=subtraction|car_plus1;
+    8'b0010_0100:buffer_control_signal<=pc2mar|car_clear;
     //JMPGEZ
     
     //JMP

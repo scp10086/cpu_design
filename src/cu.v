@@ -119,6 +119,10 @@ always@(posedge clk or negedge rst)begin
     end
 end
 always@(posedge clk)begin
+    if(!rst)begin
+        car_addr<=0;
+    end
+    else begin
     case(car_addr)
     //autofetch
     8'b0000_0000:buffer_control_signal<=memory2mbr|car_plus1;
@@ -205,6 +209,7 @@ always@(posedge clk)begin
     8'b1000_0001:buffer_control_signal<=pc2mar|car_clear;
     default:buffer_control_signal<=0;
     endcase
+    end
 end
 always@(posedge clk)begin
     control_signal<=buffer_control_signal;

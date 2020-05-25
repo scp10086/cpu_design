@@ -20,25 +20,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module RAM(
-input clk,
-input rst,
-input [15:0] data_in,
-output [15:0] data_out,
-input [7:0] addr
-    );
-reg flag_wea = 0;
-blk_mem_gen_0 u_blk_mem_gen_0 (
-.addra(addr),
-.clka(clk),
-.dina(data_in),
-.douta(data_out),
-.ena(rst), 
-.wea(flag_wea) //ram 读写使能信号,高电平写入,低电平读出  
-);
-endmodule
+//module RAM(
+//input clk,
+//input rst,
+//input [15:0] data_in,
+//output [15:0] data_out,
+//input [7:0] addr
+//    );
+//reg flag_wea = 0;
+//blk_mem_gen_0 u_blk_mem_gen_0 (
+//.addra(addr),
+//.clka(clk),
+//.dina(data_in),
+//.douta(data_out),
+//.ena(rst), 
+//.wea(flag_wea) //ram 读写使能信号,高电平写入,低电平读出  
+//);
+//endmodule
 
-/*module RAM(
+module RAM(
 input clk,
 input rst,
 input [15:0] data_in,
@@ -71,4 +71,4 @@ blk_mem_gen_0 u_blk_mem_gen_0 (
 .ena(rst), 
 .wea(flag_wea) //ram 读写使能信号,高电平写入,低电平读出  
 );
-endmodule*/
+endmodule

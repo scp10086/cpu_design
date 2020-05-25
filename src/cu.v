@@ -83,7 +83,7 @@ parameter arithmetic_shift_right_operation =  32'b1<<31;
 always@(posedge clk or negedge rst)begin
     if(rst == 0)begin
         control_signal<=0;
-        buffer_cu<=0;
+        buffer_cu<=5;
         car_addr<=0;
         buffer_control_signal<=0;
     end

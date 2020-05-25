@@ -33,7 +33,7 @@ rst<=0;
 rst<=1;
 end
 always # 10 clk=~clk;
-ceiling u_ceiling(
+top u_top(
 .clk(clk),
 .rst(rst),
 .acc_out(acc_out),

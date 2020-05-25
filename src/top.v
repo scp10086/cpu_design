@@ -23,8 +23,8 @@
 module top(
 input clk,
 input rst,
-output [15:0]acc,
-output [15:0]mr
+output [15:0]acc_out,
+output [15:0]mr_out
 );
 wire [15:0] ram2mbr,mbr2ram,mbr2br,acc2mbr,mr2mbr,br2alu,acc2alu,alu2acc,alu2mr;
 wire [31:0] control_signal;
@@ -103,7 +103,8 @@ ACC u_ACC(
 .clk(clk),
 .rst(rst),
 .acc_in(alu2acc),
-.acc_out(acc_out)
+.acc_out(acc_out),
+.acc_out_2(acc2alu)
 );
 MR u_MR(
 .clk(clk),

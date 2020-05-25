@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 2020/05/05 10:50:34
+-- Create Date: 2020/05/25 14:40:28
 -- Design Name: 
--- Module Name: ACC - Behavioral
+-- Module Name: MR - Behavioral
 
 ----------------------------------------------------------------------------------
 
@@ -21,25 +21,26 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity ACC is
+entity MR is
   Port (
   clk,rst:in std_logic;
-  acc_in:in std_logic_vector(15 downto 0);
-  acc_out:out std_logic_vector(15 downto 0)
-  --ctrl_sig:in std_logic_vector(31 downto 0)
+  mr_in:in std_logic_vector(15 downto 0);
+  mr_out:out std_logic_vector(15 downto 0)
    );
-end ACC;
+end MR;
 
-architecture Behavioral of ACC is
+architecture Behavioral of MR is
 
 begin
+
 process(clk)
 begin
 if (clk'event and clk='1') then
 if (rst='1') then
-acc_out<=acc_in;
-else acc_out<="0000000000000000";
+mr_out<=mr_in;
+else mr_out<="0000000000000000";
 end if;
 end if;
 end process;
+
 end Behavioral;

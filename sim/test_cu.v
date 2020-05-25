@@ -30,7 +30,7 @@ initial begin
 clk<=0;
 rst<=0;
 flags<=0;
-ir2cu<=0;
+ir2cu<=8'b0000_0010;
 
 # 60
 rst<=1;

@@ -89,15 +89,15 @@ always@(posedge clk or negedge rst)begin
     end
     else begin
     buffer_cu<=1;
-    if(buffer_control_signal[car_plus1] == 1)begin
+    if(buffer_control_signal&car_plus1)begin
     buffer_cu<=2;
         car_addr = car_addr + 1;
     end
-    if(buffer_control_signal[car_clear] == 1)begin
+    if(buffer_control_signal&car_clear)begin
     buffer_cu<=3;
         car_addr = 0;
     end
-    if(buffer_control_signal[car_jump] == 1)
+    if(buffer_control_signal&car_jump)
         begin
         buffer_cu<=4;
         case (data_from_ir)

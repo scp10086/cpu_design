@@ -81,21 +81,25 @@ parameter mpy_operation = 32'b1<<29;
 parameter arithmetic_shift_left_operation =  32'b1<<30;
 parameter arithmetic_shift_right_operation =  32'b1<<31;
 always@(posedge clk or negedge rst)begin
-    if(!rst)begin
+    if(rst == 0)begin
         control_signal<=0;
         buffer_cu<=0;
         car_addr<=0;
         buffer_control_signal<=0;
     end
     else begin
+    buffer_cu<=1;
     if(buffer_control_signal[car_plus1] == 1)begin
+    buffer_cu<=2;
         car_addr = car_addr + 1;
     end
     if(buffer_control_signal[car_clear] == 1)begin
+    buffer_cu<=3;
         car_addr = 0;
     end
     if(buffer_control_signal[car_jump] == 1)
         begin
+        buffer_cu<=4;
         case (data_from_ir)
         store:car_addr<=8'b0000_1000;
         load:car_addr<=8'b0001_0000;

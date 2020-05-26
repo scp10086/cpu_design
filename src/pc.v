@@ -29,15 +29,18 @@ output reg [7:0]data_to_mbr,
 output reg [7:0]data_to_mar
     );
 reg [7:0]buffer_pc;
-always@(control_signal or negedge rst)begin
+reg flag_pc_plus_1;
+always@(posedge clk or negedge rst)begin
     if(!rst)begin
         buffer_pc<=0;
         data_to_mar<=0;
         data_to_mbr<=0;
+        flag_pc_plus_1<=0;
     end
     else begin
-        if(control_signal[20] == 1)begin
+        if(flag_pc_plus_1 == 1)begin
             buffer_pc <= buffer_pc + 1;
+            flag_pc_plus_1<=0;
         end
         if(control_signal[1] == 1)begin
             data_to_mbr <= buffer_pc ;
@@ -49,5 +52,8 @@ always@(control_signal or negedge rst)begin
            buffer_pc <= data_from_mbr ;
         end                     
     end
+end
+always@(posedge control_signal[20])begin
+    flag_pc_plus_1<=1;
 end
 endmodule

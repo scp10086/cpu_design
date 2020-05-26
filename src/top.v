@@ -30,6 +30,7 @@ wire [15:0] ram2mbr,mbr2ram,mbr2br,acc2mbr,mr2mbr,br2alu,acc2alu,alu2acc,alu2mr;
 wire [31:0] control_signal;
 wire [7:0] pc2mbr,mbr2pc,mbr2mar,mbr2ir,ir2cu,pc2mar,addr;
 wire [7:0] flags;
+reg [15:0]acc2mbr_test=7;
 cu u_cu(
 .clk(clk),
 .rst(rst),
@@ -60,7 +61,7 @@ MBR u_MBR(
 .data_from_memory(ram2mbr),
 .data_from_pc(pc2mbr),
 .data_from_mr(mr2mbr),
-.data_from_acc(acc2mbr),
+.data_from_acc(acc2mbr_test),
 .data_to_memory(mbr2ram),
 .data_to_pc(mbr2pc),
 .data_to_mar(mbr2mar),
@@ -104,7 +105,8 @@ ACC u_ACC(
 .rst(rst),
 .acc_in(alu2acc),
 .acc_out(acc_out),
-.acc_out_2(acc2alu)
+.acc_out_2(acc2alu),
+.acc_out_3(acc2mbr)
 );
 MR u_MR(
 .clk(clk),

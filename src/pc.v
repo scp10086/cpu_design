@@ -29,7 +29,7 @@ output reg [7:0]data_to_mbr,
 output reg [7:0]data_to_mar
     );
 reg [7:0]buffer_pc;
-always@(posedge clk or negedge rst)begin
+always@(control_signal or negedge rst)begin
     if(!rst)begin
         buffer_pc<=0;
         data_to_mar<=0;

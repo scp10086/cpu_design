@@ -30,7 +30,7 @@ output reg [31:0] control_signal
 reg [7:0]buffer_cu;
 reg [7:0]car_addr;
 reg [31:0]buffer_control_signal;
-
+reg clk_2 =0;
 parameter store = 8'b0000_0001;
 parameter load = 8'b0000_0010;
 parameter add = 8'b0000_0011;
@@ -80,7 +80,10 @@ parameter logical_shift_right_operation = 32'b1<<28;
 parameter mpy_operation = 32'b1<<29;
 parameter arithmetic_shift_left_operation =  32'b1<<30;
 parameter arithmetic_shift_right_operation =  32'b1<<31;
-always@(posedge clk or negedge rst)begin
+always@(posedge clk)begin
+    clk_2 = ~clk_2;
+end
+always@(posedge clk_2 or negedge rst)begin
     if(rst == 0)begin
         control_signal<=0;
         buffer_cu<=5;
@@ -122,28 +125,30 @@ always@(posedge clk or negedge rst)begin
         end
     end
 end
-always@(posedge clk)begin
+always@(posedge clk_2)begin
     if(!rst)begin
         car_addr<=0;
     end
     else begin
     case(car_addr)
     //autofetch
-    8'b0000_0000:buffer_control_signal<=memory2mbr|car_plus1;
-    8'b0000_0001:buffer_control_signal<=mbr2ir|car_plus1;
-    8'b0000_0010:buffer_control_signal<=ir2cu|car_plus1;
-    8'b0000_0011:buffer_control_signal<=car_jump;
+    8'b0000_0000:buffer_control_signal<=mar2memory|car_plus1;
+    8'b0000_0001:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0000_0010:buffer_control_signal<=mbr2ir|car_plus1;
+    8'b0000_0011:buffer_control_signal<=ir2cu|car_plus1;
+    8'b0000_0100:buffer_control_signal<=car_jump;
     //STORE
     8'b0000_1000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
     8'b0000_1001:buffer_control_signal<=acc2mbr|car_plus1;
     8'b0000_1010:buffer_control_signal<=mbr2memory|car_plus1;
     8'b0000_1011:buffer_control_signal<=pc2mar|car_clear;
     //LOAD
-    8'b0001_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
-    8'b0001_0001:buffer_control_signal<=memory2mbr|car_plus1;
-    8'b0001_0010:buffer_control_signal<=mbr2br|acc_clear|car_plus1;
-    8'b0001_0011:buffer_control_signal<=addition|car_plus1;
-    8'b0001_0100:buffer_control_signal<=pc2mar|car_clear;
+    8'b0001_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;    
+    8'b0001_0001:buffer_control_signal<=mar2memory|car_plus1;    
+    8'b0001_0010:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0001_0011:buffer_control_signal<=mbr2br|acc_clear|car_plus1;
+    8'b0001_0100:buffer_control_signal<=addition|car_plus1;
+    8'b0001_0101:buffer_control_signal<=pc2mar|car_clear;
     //ADD
     8'b0001_1000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
     8'b0001_1001:buffer_control_signal<=memory2mbr|car_plus1;

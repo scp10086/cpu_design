@@ -28,7 +28,7 @@ input [15:0]MBRtoBR,
 output reg[15:0]BRtoALU
     );
 reg [15:0] buffer_br=0;    
-    always@(posedge clk or posedge rst)begin
+    always@( clk or posedge rst)begin
         if(!rst)begin
         BRtoALU<=16'h0000;
         end

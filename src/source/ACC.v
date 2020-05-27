@@ -33,6 +33,9 @@ always@(posedge clk or posedge rst)begin
     buffer_acc<=acc_in;
     acc_out<=buffer_acc;
     end
+    else begin
+        acc_out<=0;
+    end
 end
 
 always@(posedge clk or posedge rst)begin

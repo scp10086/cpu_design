@@ -40,7 +40,7 @@ reg signed[15:0] result=0;
 reg [15:0] left_arith=0;  
 reg [15:0] right_arith=0;  
 
-always@(posedge clk or posedge rst)begin
+always@( clk or posedge rst)begin
    if(rst)begin
    operand1<=ACCtoALU;
    operand2<=BRtoALU;
@@ -48,9 +48,14 @@ always@(posedge clk or posedge rst)begin
    //ALUtoACC<=mpy[15:0];
    //ALUtoMR<=mpy[31:16];
    end
+   else begin
+        flag<=0;
+        ALUtoMR<=0;
+        ALUtoACC<=0;
+   end
 end
 
-always@(posedge clk or posedge rst)begin
+always@( clk or posedge rst)begin
    if(rst)begin
    if(ACCtoALU[15]==0)begin
    flag<=8'h00;
@@ -61,7 +66,7 @@ always@(posedge clk or posedge rst)begin
    end
 end
    
-always@(posedge clk or posedge rst)begin
+always@( clk or posedge rst)begin
    if(rst)begin
    if(control_signal[22]==1)begin
      result<=operand1+operand2;

@@ -64,7 +64,7 @@ parameter mbr2memory = 32'b1<<12;
 parameter ir2cu = 32'b1<<13;
 parameter br2alu = 32'b1<<14;
 parameter mr2mbr = 32'b1<<15;
-parameter mpy_alu2mr = 32'b1<<16;
+//parameter mpy_alu2mr = 32'b1<<16;
 parameter car_plus1 = 32'b1<<17;
 parameter car_jump = 32'b1<<18;
 parameter car_clear = 32'b1<<19;
@@ -186,8 +186,7 @@ always@(posedge clk_2)begin
     8'b0100_0010:buffer_control_signal<=memory2mbr|car_plus1;
     8'b0100_0011:buffer_control_signal<=mbr2br|car_plus1;
     8'b0100_0100:buffer_control_signal<=mpy_operation|car_plus1;
-    8'b0100_0101:buffer_control_signal<=mpy_alu2mr|car_plus1;
-    8'b0100_0110:buffer_control_signal<=pc2mar|car_clear;
+    8'b0100_0101:buffer_control_signal<=pc2mar|car_clear;
     //DIV
     
     //AND
@@ -227,11 +226,11 @@ always@(posedge clk_2)begin
     8'b0111_0101:buffer_control_signal<=pc2mar|car_clear;
     //arithmetic_shift_right
     8'b0111_1000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
-    8'b0111_0001:buffer_control_signal<=mar2memory|car_plus1;
-    8'b0111_0010:buffer_control_signal<=memory2mbr|car_plus1;
-    8'b0111_0011:buffer_control_signal<=mbr2br|car_plus1;
-    8'b0111_0100:buffer_control_signal<=arithmetic_shift_right_operation|car_plus1;
-    8'b0111_0101:buffer_control_signal<=pc2mar|car_clear;
+    8'b0111_1001:buffer_control_signal<=mar2memory|car_plus1;
+    8'b0111_1010:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b0111_1011:buffer_control_signal<=mbr2br|car_plus1;
+    8'b0111_1100:buffer_control_signal<=arithmetic_shift_right_operation|car_plus1;
+    8'b0111_1101:buffer_control_signal<=pc2mar|car_clear;
     //arithmetic_shift_left:car_addr<=8'b1000_0000;
     8'b1000_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
     8'b1000_0001:buffer_control_signal<=mar2memory|car_plus1;

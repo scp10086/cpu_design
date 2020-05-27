@@ -34,15 +34,15 @@ always@(posedge clk or posedge rst)begin
     mr_out<=buffer_mr;
     end
     else begin
-        acc_out<=0;
+        mr_out<=0;
     end
 end
 
 always@(posedge clk or posedge rst)begin
     if(rst)begin
     if(control_signal[21]==1)begin
+    buffer_mr<=16'h0000;
     mr_out<=16'h0000;
-    mr__out<=16'h0000;
     end
     end
 end   

@@ -80,12 +80,9 @@ always@( clk or posedge rst)begin
      ALUtoACC<=result;
    end
    if(control_signal[29]==1)begin
-     mpy<=ACCtoALU*BRtoALU;
-     ALUtoACC<=mpy[15:0];
-   end
-   if(control_signal[16]==1)begin
-     mpy<=operand1*operand2;
-     ALUtoMR<=mpy[31:16];
+     mpy=ACCtoALU*BRtoALU;
+     ALUtoACC=mpy[15:0];
+     ALUtoMR=mpy[31:16];
    end
    if(control_signal[24]==1)begin //Óë
      result<=operand1&operand2;

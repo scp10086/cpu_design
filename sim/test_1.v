@@ -20,11 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module test_1(    );
+module test_1(  );
 reg clk;
 reg rst;
-wire [15:0]acc_out;
-wire [15:0]mr_out;
 initial begin
 clk<=0;
 rst<=0;
@@ -35,8 +33,6 @@ end
 always # 10 clk=~clk;
 top u_top(
 .clk(clk),
-.rst(rst),
-.acc_out(acc_out),
-.mr_out(mr_out)
+.rst(rst)
 );
 endmodule

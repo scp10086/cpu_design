@@ -68,6 +68,9 @@ end
    
 always@( clk or posedge rst)begin
    if(rst)begin
+   if(control_signal[21]==1)begin
+        operand1<=0;
+   end
    if(control_signal[22]==1)begin
      result<=operand1+operand2;
      ALUtoACC<=result;

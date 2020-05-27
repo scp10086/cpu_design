@@ -41,6 +41,7 @@ end
 always@(posedge clk or posedge rst)begin
     if(rst)begin
     if(control_signal[21]==1)begin
+    buffer_acc<=16'h0000;
     acc_out<=16'h0000;
     end
     end

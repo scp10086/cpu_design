@@ -22,15 +22,12 @@
 
 module top(
 input clk,
-input rst,
-output [15:0]acc_out,
-output [15:0]mr_out
+input rst
 );
-wire [15:0] ram2mbr,mbr2ram,mbr2br,acc2mbr,mr2mbr,br2alu,acc2alu,alu2acc,alu2mr;
+wire [15:0] ram2mbr,mbr2ram,mbr2br,br2alu,acc_out,alu2acc,mr_out,alu2mr;
 wire [31:0] control_signal;
 wire [7:0] pc2mbr,mbr2pc,mbr2mar,mbr2ir,ir2cu,pc2mar,addr;
 wire [7:0] flags;
-reg [15:0]acc2mbr_test=7;
 cu u_cu(
 .clk(clk),
 .rst(rst),
@@ -60,8 +57,8 @@ MBR u_MBR(
 .control_signal(control_signal),
 .data_from_memory(ram2mbr),
 .data_from_pc(pc2mbr),
-.data_from_mr(mr2mbr),
-.data_from_acc(acc2mbr_test),
+.data_from_mr(mr_out),
+.data_from_acc(acc_out),
 .data_to_memory(mbr2ram),
 .data_to_pc(mbr2pc),
 .data_to_mar(mbr2mar),
@@ -78,19 +75,19 @@ IR u_IR(
 BR u_BR(
 .clk(clk),
 .rst(rst),
-.ctrl_sig(control_signal),
+.control_signal(control_signal),
 .MBRtoBR(mbr2br),
 .BRtoALU(br2alu)
 );
 ALU u_ALU(
 .clk(clk),
 .rst(rst),
-.ctrl_sig(control_signal),
+.control_signal(control_signal),
 .BRtoALU(br2alu),
-.flag(flags),
-.ACCtoALU(acc2alu),
+.ACCtoALU(acc_out),
 .ALUtoACC(alu2acc),
-.ALUtoMR(alu2mr)
+.ALUtoMR(alu2mr),
+.flag(flags)
 );
 RAM u_RAM(
 .clk(clk),
@@ -103,14 +100,15 @@ RAM u_RAM(
 ACC u_ACC(
 .clk(clk),
 .rst(rst),
+.control_signal(control_signal),
 .acc_in(alu2acc),
-.acc_out(acc_out),
-.acc_out_2(acc2alu),
-.acc_out_3(acc2mbr)
+.acc_out(acc_out)
+
 );
 MR u_MR(
 .clk(clk),
 .rst(rst),
+.control_signal(control_signal),
 .mr_in(alu2mr),
 .mr_out(mr_out)
 );

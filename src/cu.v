@@ -230,15 +230,15 @@ always@(posedge clk_2)begin
     8'b0111_0001:buffer_control_signal<=mar2memory|car_plus1;
     8'b0111_0010:buffer_control_signal<=memory2mbr|car_plus1;
     8'b0111_0011:buffer_control_signal<=mbr2br|car_plus1;
-    8'b0111_0100:buffer_control_signal<=arithmetic_shift_right|car_plus1;
+    8'b0111_0100:buffer_control_signal<=arithmetic_shift_right_operation|car_plus1;
     8'b0111_0101:buffer_control_signal<=pc2mar|car_clear;
     //arithmetic_shift_left:car_addr<=8'b1000_0000;
     8'b1000_0000:buffer_control_signal<=mbr2mar|pc_plus1|car_plus1;
     8'b1000_0001:buffer_control_signal<=mar2memory|car_plus1;
-    8'b1000_0001:buffer_control_signal<=memory2mbr|car_plus1;
-    8'b1000_0001:buffer_control_signal<=mbr2br|car_plus1;
-    8'b1000_0001:buffer_control_signal<=arithmetic_shift_left|car_plus1;
-    8'b1000_0001:buffer_control_signal<=pc2mar|car_clear;
+    8'b1000_0010:buffer_control_signal<=memory2mbr|car_plus1;
+    8'b1000_0011:buffer_control_signal<=mbr2br|car_plus1;
+    8'b1000_0100:buffer_control_signal<=arithmetic_shift_left_operation|car_plus1;
+    8'b1000_0101:buffer_control_signal<=pc2mar|car_clear;
     default:buffer_control_signal<=0;
     endcase
     end

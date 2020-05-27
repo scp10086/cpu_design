@@ -108,6 +108,7 @@ ACC u_ACC(
 MR u_MR(
 .clk(clk),
 .rst(rst),
+.control_signal(control_signal),
 .mr_in(alu2mr),
 .mr_out(mr_out)
 );
